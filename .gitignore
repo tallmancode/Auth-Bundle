@@ -1,0 +1,8 @@
+.*.cache
+composer.lock
+phpunit.xml
+vendor/*
+/vendor/
+grumphp.yml
+.php-cs-fixer.cache
+.php-cs-fixer.php

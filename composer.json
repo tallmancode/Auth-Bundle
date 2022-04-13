@@ -1,0 +1,32 @@
+{
+    "name": "tallmancode/authbundle",
+    "autoload": {
+        "psr-4": {
+        "TallmanCode\\AuthBundle\\": "src/",
+        "TallmanCode\\AuthBundle\\Tests\\": "tests/"
+        }
+    },
+    "license": "MIT",
+    "type": "symfony-bundle",
+    "authors": [
+        {
+            "name": "Tallmancode",
+            "email": "steve@tallmancode.co.za"
+        }
+    ],
+    "require": {
+        "php": ">=7.2.5",
+        "symfony/config": "^4.4 | ^5.0 | ^6.0",
+        "symfony/dependency-injection": "^4.4 | ^5.0 | ^6.0",
+        "symfony/deprecation-contracts": "^2.2 | ^3.0",
+        "symfony/http-kernel": "^4.4 | ^5.0 | ^6.0",
+        "symfony/security-bundle": "5.4.*",
+        "symfonycasts/verify-email-bundle": "^1.10",
+        "symfony/mailer": "^6.0",
+        "symfony/monolog-bundle": "^3.1"
+    },
+    "require-dev": {
+        "phpro/grumphp": "^1.10",
+        "symfony/phpunit-bridge": "^6.0"
+    }
+}

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services
+        http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <!--Auth Service-->
+        <service id="tallman_code_auth.auth_service" class="TallmanCode\AuthBundle\AuthService"/>
+        <service id="TallmanCode\AuthBundle\AuthService" alias="tallman_code_auth.auth_service"/>
+
+        <!--Register-->
+        <service id="tallman_code_auth.registration.form.factory" class="TallmanCode\AuthBundle\Form\Factory\FormFactory">
+            <argument type="service" id="form.factory" />
+            <argument>%tallman_code_auth.registration.form.name%</argument>
+            <argument>%tallman_code_auth.registration.form.type%</argument>
+        </service>
+
+        <service id="tallman_code_auth.registration.form.factory" class="TallmanCode\AuthBundle\Form\Factory\FormFactory">
+            <argument type="service" id="form.factory" />
+            <argument>%tallman_code_auth.registration.form.name%</argument>
+            <argument>%tallman_code_auth.registration.form.type%</argument>
+        </service>
+        <service id="TallmanCode\AuthBundle\Form\Factory\AuthFormFactoryInterface" alias="tallman_code_auth.registration.form.factory" />
+
+        <service id="tallman_code_auth.registration.registration_form" class="TallmanCode\AuthBundle\Form\Registration\RegistrationFormType">
+            <tag name="form.type"/>
+            <argument>%tallman_code_auth.user.class%</argument>
+        </service>
+
+        <service id="tallman_code_auth.registration_controller" class="TallmanCode\AuthBundle\Controller\RegistrationController" public="true">
+            <call method="setContainer">
+                <argument type="service" id="Psr\Container\ContainerInterface"/>
+            </call>
+            <tag name="container.service_subscriber"/>
+            <tag name="controller.service_arguments"/>
+            <argument>%tallman_code_auth.user.class%</argument>
+            <argument type="service" id="tallman_code_auth.email_confirmation.email_confirm"/>
+        </service>
+
+        <!-- Email confirmation -->
+        <service id="tallman_code_auth.email_confirmation.email_confirm" class="TallmanCode\AuthBundle\EmailConfirmation\EmailConfirm">
+            <argument type="service" id="symfonycasts.verify_email.helper"/>
+            <argument type="service" id="mailer.mailer"/>
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+        </service>
+        <service id="TallmanCode\AuthBundle\EmailConfirmation\EmailConfirmInterface" alias="tallman_code_auth.email_confirmation.email_confirm"/>
+
+        <service id="tallman_code_auth.email_confirmation_controller" class="TallmanCode\AuthBundle\Controller\ConfirmEmailController" public="true">
+            <call method="setContainer">
+                <argument type="service" id="Psr\Container\ContainerInterface"/>
+            </call>
+            <tag name="container.service_subscriber"/>
+            <tag name="controller.service_arguments"/>
+            <argument>%tallman_code_auth.user.class%</argument>
+            <argument>%tallman_code_auth.registration.confirm.failed_redirect_route%</argument>
+            <argument type="service" id="tallman_code_auth.email_confirmation.email_confirm"/>
+        </service>
+
+
+    </services>
+
+</container>
