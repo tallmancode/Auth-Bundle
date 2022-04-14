@@ -49,7 +49,7 @@ class TallmanCodeAuthExtension extends Extension
         $confirmEmail->setArgument(5, $config['registration']['confirm']['from_address']);
     }
 
-    public function getAlias()
+    public function getAlias(): string
     {
         return 'tallman_code_auth';
     }
